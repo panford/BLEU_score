@@ -56,14 +56,15 @@ class Bleu():
 
     if self.n_gram_weights is None:
       self.n_gram_weights = np.array([0.25]*self.n)
-    b = np.exp(np.multiply(self.n_gram_weights, np.log(scores)))
+    b = np.exp(np.multiply(self.n_gram_weights, np.log(scores + 10e-14)))
     return np.sum(b)
 
 
   @staticmethod
+  
   def bleu(precision, brevity):
     "Compute bleu score from brevity and precision scores"
-    
+
     return brevity * precision
 
   def __call__(self, candidate:str, reference:str):
